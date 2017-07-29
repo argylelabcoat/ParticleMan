@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "azure-iot-device": "^1.1.16",
     "johnny-five": "^0.11.3",
     "particle-io": "^0.14.0"
   }
