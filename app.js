@@ -4,10 +4,12 @@ var Protocol = require('azure-iot-device-mqtt').Mqtt;
 var Client = require('azure-iot-device').Client;
 var Message = require('azure-iot-device').Message;
 
-/ String containing Hostname, Device Id & Device Key in the following formats:
+// String containing Hostname, Device Id & Device Key in the following formats:
 //  "HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"
 
-var connectionString = '[ConnectionString]';
+var connectionString = 'HostName=HughesParticle.azure-devices.net;DeviceId=ParticleMan;SharedAccessKey=NpbjCMPHmhJxrR2j3lqOM5ojCCi9djE+vJib8MrqdLI='; 
+//'HostName=HughesParticle.azure-devices.net;DeviceId=ParticleMan;SharedAccessKeyName=iothubowner;SharedAccessKey=PlLZRemcvd0Y1fnhDOyljwU8ObtNZOBK3QMQr8Y8SCI=';
+//'HostName=HughesParticle.azure-devices.net;DeviceId=ParticleMan;SharedAccessKey=NpbjCMPHmhJxrR2j3lqOM5ojCCi9djE+vJib8MrqdLI=';
 
 // fromConnectionString must specify a transport constructor, coming from any transport package.
 
@@ -16,8 +18,8 @@ var client = Client.fromConnectionString(connectionString, Protocol);
 
 var board = new five.Board({
     io: new Particle({
-        token: '[AccessToken]',
-        deviceName: '[DeviceName]'
+        token: '078e4dd2473f6be7f4ad09682614577949c9c08a',
+        deviceId: 'ParticleMan'
     })
 })
 
@@ -45,7 +47,7 @@ board.on('ready', function () {
 
     /*
 
-    JOHNNY-FIVE CODE GOES HERE
+    JOHNNY-FIVE CODE FOLLOWS
 
     */
 
@@ -65,10 +67,9 @@ board.on('ready', function () {
         board.digitalWrite('D0', 1)
 
         var time = new Date();
-        var data = JSON.stringify({ deviceId: 'GabbyPhoton', message: "button pressed", time:time });
+        var data = JSON.stringify({ deviceId: 'ParticleMan', message: "button pressed", time:time });
         var message = new Message(data);
-
-         client.sendEvent(message, printResultFor('send'));
+        client.sendEvent(message, printResultFor('send'));
     });
 
 
@@ -79,3 +80,10 @@ board.on('ready', function () {
 
     client.open(connectCallback);
 })
+
+function printResultFor(op) {
+    return function printResult(err, res) {
+        if (err) console.log(op + ' error: ' + err.toString());
+        if (res) console.log(op + ' status: ' + res.constructor.name);
+    };
+}
