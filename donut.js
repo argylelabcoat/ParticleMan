@@ -9,7 +9,7 @@ var Client = require('azure-iot-device').Client;
 var Message = require('azure-iot-device').Message;
 
 // Include Photon Info Here
-var deviceId = '[DeviceId]';
+var deviceId = 'ParticleMan';
 
 var connectionString = 'HostName=nodebots-iothub.azure-devices.net;DeviceId=particleMan;SharedAccessKey=JFtTZUiePHvrbgyqVGno041fEdSFU5rw7xtbGs0NKSc';
 var client = Client.fromConnectionString(connectionString, Protocol);
